@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChefVirtual</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Recetas App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home"><i class="bi bi-house-door"></i> Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#recetas"><i class="bi bi-journal-richtext"></i> Mis Recetas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#foro"><i class="bi bi-people"></i> Foro</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#busqueda"><i class="bi bi-search"></i> Buscar</a>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> <span id="user-name">Usuario</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#perfil"><i class="bi bi-gear"></i> Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button class="dropdown-item" id="btn-logout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Sección de inicio -->
+        <section id="home-section">
+            <div class="jumbotron bg-light p-5 rounded">
+                <h1 class="display-4">¡Bienvenido a Recetas App!</h1>
+                <p class="lead">Descubre, crea y comparte tus recetas favoritas con la comunidad.</p>
+                <hr class="my-4">
+                <p>Comienza a explorar o crea tu primera receta ahora mismo.</p>
+                <button class="btn btn-primary btn-lg" id="btn-get-started">Comenzar</button>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <i class="bi bi-journal-plus display-4 text-primary"></i>
+                            <h5 class="card-title mt-3">Crea tus recetas</h5>
+                            <p class="card-text">Guarda tus recetas favoritas con ingredientes y pasos detallados.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <i class="bi bi-share display-4 text-primary"></i>
+                            <h5 class="card-title mt-3">Comparte en el foro</h5>
+                            <p class="card-text">Publica tus mejores creaciones y recibe comentarios de la comunidad.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <i class="bi bi-search display-4 text-primary"></i>
+                            <h5 class="card-title mt-3">Descubre nuevas ideas</h5>
+                            <p class="card-text">Busca inspiración para tus próximas comidas con nuestro buscador.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección de recetas -->
+        <section id="recetas-section" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Mis Recetas</h2>
+                <button id="btn-nueva-receta" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Nueva Receta</button>
+            </div>
+            <div id="lista-recetas" class="row"></div>
+        </section>
+        
+        <!-- Sección de foro -->
+        <section id="foro-section" style="display: none;">
+            <h2>Foro de Recetas</h2>
+            <div class="mb-4">
+                <div class="input-group">
+                    <input type="text" id="receta-id" class="form-control" placeholder="ID de la receta a publicar">
+                    <button id="btn-publicar" class="btn btn-primary"><i class="bi bi-send"></i> Publicar</button>
+                </div>
+            </div>
+            <div id="lista-posts" class="row"></div>
+        </section>
+        
+        <!-- Sección de búsqueda -->
+        <section id="busqueda-section" style="display: none;">
+            <h2>Búsqueda de Recetas</h2>
+            <div class="mb-4">
+                <div class="input-group">
+                    <input type="text" id="input-busqueda" class="form-control" placeholder="Buscar receta...">
+                    <button id="btn-buscar" class="btn btn-primary"><i class="bi bi-search"></i> Buscar</button>
+                </div>
+            </div>
+            <div id="resultados-busqueda" class="list-group"></div>
+        </section>
+        
+        <!-- Sección de perfil -->
+        <section id="perfil-section" style="display: none;">
+            <h2>Mi Perfil</h2>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <i class="bi bi-person-circle display-1 text-primary"></i>
+                        </div>
+                        <div class="col-md-8">
+                            <h4 id="profile-name">Nombre de Usuario</h4>
+                            <p id="profile-email">usuario@ejemplo.com</p>
+                            <button class="btn btn-outline-primary mt-3">Editar Perfil</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <h4>Estadísticas</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 id="stats-recetas">0</h5>
+                                <p class="text-muted">Recetas creadas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 id="stats-posts">0</h5>
+                                <p class="text-muted">Publicaciones</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 id="stats-likes">0</h5>
+                                <p class="text-muted">Me gusta recibidos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Modal para crear/editar receta -->
+    <div class="modal fade" id="receta-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nueva Receta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-receta">
+                        <div class="mb-3">
+                            <label for="receta-nombre" class="form-label">Nombre de la receta</label>
+                            <input type="text" class="form-control" id="receta-nombre" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Ingredientes</label>
+                            <div id="ingredientes-container"></div>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="btn-add-ingrediente">
+                                <i class="bi bi-plus-circle"></i> Añadir ingrediente
+                            </button>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Pasos</label>
+                            <div id="pasos-container"></div>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="btn-add-paso">
+                                <i class="bi bi-plus-circle"></i> Añadir paso
+                            </button>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="receta-publicar">
+                            <label class="form-check-label" for="receta-publicar">
+                                Publicar en el foro
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btn-guardar-receta">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/recetas.js"></script>
+    <script src="js/foro.js"></script>
+    <script src="js/busqueda.js"></script>
+</body>
+</html>

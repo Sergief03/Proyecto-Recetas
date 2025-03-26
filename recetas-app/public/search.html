@@ -1,0 +1,35 @@
+<script>
+    // Check if user is authenticated
+    const isAuthenticated = false; // Replace with actual authentication check
+    if (!isAuthenticated) {
+        window.location.href = 'auth.html'; // Redirect to authentication page
+    }
+</script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de ChefVirtual</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="forum.html">Foro</a></li>
+            <li><a href="search.html">Buscar</a></li>
+            <li><a href="profile.html">Perfil</a></li>
+        </ul>
+    </nav>
+    <div id="app">
+        <h1>Búsqueda de Recetas</h1>
+        <input type="text" id="input-busqueda" placeholder="Buscar receta">
+        <button id="btn-buscar">Buscar</button>
+        <div id="resultados-busqueda"></div>
+    </div>
+    <script src="js/busqueda.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+/* Estilos generales */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #e9ecef; /* Updated background color */
+    font-family: Arial, sans-serif; /* Added font family for better typography */
+}
+
+
+/* Estilos para comentarios */
+.comentarios-container {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.list-group-item {
+    background-color: transparent;
+    border-left: none;
+    border-right: none;
+}
+
+/* Estilos para botones */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 5px; /* Added border radius for a softer button look */
+    padding: 10px 20px; /* Added padding for better button size */
+}
+
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0069d9;
+}
+
+/* Estilos para búsqueda */
+#resultados-busqueda .list-group-item {
+    transition: background-color 0.2s;
+}
+
+#resultados-busqueda .list-group-item:hover {
+    background-color: #f0f8ff;
+}
+
+/* Estilos para formularios */
+form label {
+    font-weight: 500;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Media queries para responsive */
+@media (max-width: 768px) {
+    .jumbotron {
+        padding: 2rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    /* Adjustments for smaller screens */
+    body {
+        padding: 10px; /* Added padding for smaller screens */
+    }
+}
