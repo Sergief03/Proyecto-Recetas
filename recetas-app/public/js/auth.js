@@ -70,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
         formLogin.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Mostrar indicador de carga
             const submitBtn = formLogin.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
             submitBtn.disabled = true;
@@ -80,8 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const loginPassword = document.getElementById('login-password').value;
 
             try {
-                console.log('Intentando iniciar sesión con:', { email: loginEmail });
-                
                 const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: {
@@ -91,28 +88,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 const data = await response.json();
-                console.log('Respuesta del servidor:', data);
 
                 if (response.ok) {
-                    // Guardar token y datos del usuario
                     localStorage.setItem('authToken', data.token);
                     localStorage.setItem('userName', data.user.username);
                     localStorage.setItem('userEmail', data.user.email);
-                    
-                    // Mostrar mensaje de éxito
                     alert('¡Inicio de sesión exitoso!');
-                    
-                    // Redirigir a la página principal
                     window.location.href = 'index.html';
                 } else {
-                    // Error en el inicio de sesión
                     alert(`Error: ${data.message}`);
                 }
             } catch (error) {
                 console.error('Error:', error);
                 alert('Error al conectar con el servidor. Inténtalo de nuevo más tarde.');
             } finally {
-                // Restaurar el botón
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
             }

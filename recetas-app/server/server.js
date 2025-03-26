@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
@@ -54,30 +56,16 @@ app.post('/api/register', async (req, res) => {
     const { username, email, password } = req.body;
     console.log('Registro de usuario:', { username, email, password });
 
-    
     conn = await pool.getConnection();
-    
-    // Verificar si el usuario ya existe
-    console.log('Verificando si el usuario ya existe...');
-    const existingUsers = await conn.query(
+    const existingUsers = await conn.query('SELECT * FROM User WHERE username = ? OR email = ?', [username, email]);
 
-      'SELECT * FROM User WHERE username = ? OR email = ?',
-      [username, email]
-    );
-    
     if (existingUsers.length > 0) {
       return res.status(400).json({ message: 'El nombre de usuario o correo ya está registrado' });
     }
-    
-    // Hash de la contraseña
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    
-    // Insertar nuevo usuario
-    await conn.query(
-      'INSERT INTO User (username, email, password) VALUES (?, ?, ?)',
-      [username, email, hashedPassword]
-    );
-    
+    await conn.query('INSERT INTO User (username, email, password) VALUES (?, ?, ?)', [username, email, hashedPassword]);
+
     console.log('Usuario registrado exitosamente:', { username, email });
     res.status(201).json({ message: 'Usuario registrado exitosamente' });
 
@@ -97,7 +85,6 @@ app.post('/api/login', async (req, res) => {
 
     conn = await pool.getConnection();
     const users = await conn.query('SELECT * FROM User WHERE email = ?', [email]);
-    console.log('Users found:', users);
 
     if (users.length === 0) {
       return res.status(401).json({ message: 'Credenciales inválidas' });
@@ -110,7 +97,6 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ message: 'Credenciales inválidas' });
     }
 
-    // Generar token JWT
     const token = generateToken(user.id);
 
     res.status(200).json({
@@ -146,18 +132,12 @@ app.get('/profile.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/profile.html'));
 });
 
-async function startServer() {
-
+app.listen(PORT, async () => {
   const dbConnected = await testConnection();
-  
   if (dbConnected) {
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
+    console.log(`Server is running on port ${PORT}`);
   } else {
     console.error('No se pudo iniciar el servidor debido a problemas con la base de datos');
     process.exit(1);
   }
-}
-
-startServer();
+});
